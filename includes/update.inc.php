@@ -1,6 +1,9 @@
 <?php
-    session_start();
+
     include "../config/database.php";
+    if(isset($_POST['update']))
+    session_start();
+    
 
     if(isset($_POST['register']))
             {
@@ -74,7 +77,6 @@
                     $sql->bindParam(':username', $username);
                     $sql->bindParam(':email', $email);
                     $sql->bindParam(':passwd', $hashed);
-                    $sql->bindParam(':verification', $verification);
                     $sql->execute();
 
                         
@@ -93,3 +95,4 @@
                     echo $e->getMessage();
                 }
             }
+    ?>

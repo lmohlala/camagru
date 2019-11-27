@@ -20,7 +20,7 @@ try
     $conn->exec($user);
 
 
-    $img = "CREATE TABLE IF NOT EXISTS image (
+    $img = "CREATE TABLE IF NOT EXISTS images (
         
         id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         user            varchar(255) NOT NULL,

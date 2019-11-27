@@ -20,11 +20,11 @@ if(isset($_POST['login']))
         $conn = new PDO("mysql:$dbhost;dbname=$dbname", $dbuser, $dbpass);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $conn->prepare("SELECT * FROM user_info WHERE username = :username /*,verification = :verification*/ AND passwd = :passwd");
+        $stmt = $conn->prepare("SELECT * FROM user_info WHERE username = '$username' AND verification = '1' AND passwd = '$hashed'");
         session_start();
         $_SESSION['id'] = $_POST['username'];
         $id = $_SESSION['id'];
-        $stmt->execute(array(':username' => $id, ':passwd' => $hashed/*, ':verification' => 1*/));
+        $stmt->execute(array(':username' => $id, ':passwd' => $hashed, ':verification' => 1));
 
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $row = $stmt->fetch();
@@ -36,7 +36,7 @@ if(isset($_POST['login']))
             return ;
         }
         else {
-            $_SESSION["error"] = "incorrect password or username!!";
+            $_SESSION["error"] = "incorrect password or username or Verifiy your email!!";
             header("Location: ../login.php");
             return ;
         }

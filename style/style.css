@@ -79,4 +79,23 @@
 .font {
     font-size: 10px;
 }
+
+/* pagination style */
+.pager {
+	text-align: center;
+	margin: 40px 0;
+}
+
+.pager > li {
+	display: inline;
+}
+
+.pager > li > a {
+	border: 1px solid #ddd;
+	padding: 6px 12px;
+	margin-left: -1px;
+	color: #777;
+	text-decoration: none;
+	background-color: #fff;
+}
 /***************************/

@@ -1,7 +1,8 @@
 <?php
 
     require_once("../config/database.php");
-   // session_start();
+    require_once("../config/setup.php");
+    session_start();
     
     //When the upload button is clicked the image is uploaded into the uploads file. Only jpg, png and gif extensions are accepted.
     if (isset($_POST['submit'])) {
@@ -24,11 +25,15 @@
         //create a random name for the image to prevent image overwriting. Upload image to folder and insert image name into the database.
         else {
             $fileNameNew = uniqid('', true).".".$file_act_ext;
+
+            $username = $_SESSION['username'];
             
             move_uploaded_file($_FILES['file']['tmp_name'], '../images/'.$fileNameNew);
             $alert = "<h5>File Uploaded successfully</h5>";
-            $sql = "INSERT INTO image (img,article_likes) VALUES ('../images/'.$fileNameNew', 0)";
-	        $conn->exec($sql);
+            $sql = "INSERT INTO `images` (`id`, `user`, `img`, `article_likes`) VALUES (NULL, '$username', '$fileNameNew', '0')";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            echo $alert;
         }
     }
 ?>

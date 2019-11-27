@@ -12,56 +12,75 @@
     <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
+  
 <h1 class="reg-h1">GALLERY</h1>
-    <header>
-        <a href=index.php></a>
-            <div>
-                <nav class="gallery-col">
-                    <tr>
-                        <ul>
-                            <a href="camera.php"><td>Camera</td></a>
-                            <a href="notification.php"><td>Notification</td></a>
-                            <a href="gallery.php"><td>Gallery</td></a>
-                            <a href="login.php"><td>Logout</td></a>
-                        </ul>
-                    </tr>
-                </nav>
-            </div>
-    </header>
-    <main>
-
-        <section class="gallery-links">
-            <div>
+        <header>
+            <a href=index.php></a>
+                <div>
+                    <nav class="gallery-col">
+                        <tr>
+                            <ul>
+                                <a href="camera.php"><td>Camera</td></a>
+                                <a href="gallery.php"><td>Gallery</td></a>
+                                <a href="update.php"><td>Update info</td></a>
+                                <a href="login.php"><td>Logout</td></a>
+                            </ul>
+                        </tr>
+                    </nav>
+                </div>
+        </header>
 
     <?php
-    $pageno = 0;
-    $images_pp = 5;
-    $stmnt = $conn->prepare("SELECT * FROM 'image'");
-    $stmnt->execute();
-    $row = $stmnt->fetch();
-    $total_rows = sizeof($row);
-    $total_pages = ceil($total_rows/$images_pp);
+        $limit = 5;
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $start = ($page - 1) * $limit;
+
+        $sql = "SELECT * FROM images ORDER BY id DESC LIMIT $start, $limit";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        while ($results = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+           $image_url = $results['img'];
+
+           echo "
+           
+           <img width='300px' height='300px' src='images/$image_url' alt='image'>
+           <div class='uploader'>$posted_by</div>
+           
+           ";
+           
+       }
+
     
-    $sql = $conn->prepare("SELECT * FROM `image` ORDER BY `id` DESC LIMIT $pageno, 5");
-    
-    $sql->execute();
-    
-    while ($row = $sql->fetch(PDO::FETCH_ASSOC)){
-        
-        echo '<DIV style= "background-image: url(images/'.$row['image'].');"></DIV>';
-        //    echo '<A href= "commentsf.php?imgId='.$row['id'].'">
-        //     <DIV class="gallery-image" style= "background-image: url(uploads/'.$row['image'].');"></DIV>
-        //     <h3>comments</h3>
-        //     </A>';
-         
-    }
-    echo $total_pages;
-    echo $total_rows;
-    for ($i=1;$i<= $total_pages;$i++)
-    {
-        echo '<a href= "gallery.php?pageno='.$i.'"> '.$i.'</a>';
-    }
+        $stmt = $conn->prepare("SELECT count(*) FROM images");
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        $pages = ceil($count / $limit);
+
+       //previous pager
+        if ($page == 1)
+            $prev = $page;
+        else
+            $prev = $page - 1;
+
+        //next pager
+        if ($page == $pages)
+            $next = $page;
+        else
+            $next = $page + 1;
+
     ?>
+
+    <ul class="pager">
+		<li><a href="gallery.php?page=<?php echo $prev; ?>">«</a></li>
+		<?php $i = 1; ?>
+		<?php while ($i <= $pages) : ?>
+			<li><a href="gallery.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+			<?php $i++; ?>
+		<?php endwhile; ?>
+		<li><a href="gallery.php?page=<?php echo $next; ?>">»</a></li>
+	</ul>
+
 
 </body>
 </html>

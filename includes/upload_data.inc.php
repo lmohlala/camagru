@@ -21,7 +21,7 @@
     try
     {
        
-        $sql = "INSERT INTO `image` (`user` ,`img`, article_likes) VALUES (?,?,?)";
+        $sql = "INSERT INTO images (`user` ,`img`, article_likes) VALUES (?,?,?)";
         $stmt = $conn->prepare($sql);
         var_dump($stmt);
         $stmt->execute([$user, $file, '0']);

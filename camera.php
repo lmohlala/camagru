@@ -15,8 +15,8 @@
     </div>
     
     <div>
-        <img src="login.png" alt="USa" id="flag1" width="50" height="50"/>
-        <img src="index.jpeg" alt="GER" id="flag2" width="50" height="50"/>
+        <img src="stickers/login.png" alt="USa" id="flag1" width="50" height="50"/>
+        <img src="stickers/index.jpeg" alt="GER" id="flag2" width="50" height="50"/>
     </div>
 
     <div>
@@ -25,7 +25,7 @@
         
     </div>
 
-    <canvas id="canvas" class="move" width="640" height="480"></canvas>
+    <canvas id="canvas" class="move" width="500" height="480"></canvas>
 
     <script>
        'use strict';
@@ -66,7 +66,7 @@
 
        var context = canvas.getContext('2d');
        snap.addEventListener("click", function(){
-        context.drawImage(video, 0, 0, 420, 420);
+        context.drawImage(video, 0, 0, 640, 480);
         flag1.addEventListener("click", sticker)
         flag2.addEventListener("click", sticker2)
        });
