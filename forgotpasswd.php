@@ -12,7 +12,8 @@
     <div class="reg-container">
         <h1 class="reg-h1">Forgot password</h1>
         <form action="includes/forgotpasswd.inc.php" method="POST">
-           <span class="reg-label">ENTER EMAIL</span><br><input class="reg-input" type="text" name="email" placeholder="Enter email..."><br><br>
+           <span class="reg-label">ENTER EMAIL</span><br><input class="reg-input" type="email" name="email" placeholder="Enter email..."><br><br>
+           <span class="reg-label">ENTER YOUR UNIQUE NAME</span><br><input class="reg-input" type="text" name="okay" placeholder="Enter email..."><br><br>
             <input class="reg-button" type="submit" name="reset" value="Submit">
         </form>
     </div>

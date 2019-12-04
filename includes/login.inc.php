@@ -4,6 +4,7 @@ include "../config/database.php";
 if(isset($_POST['login']))
 {
     $username = $_POST['username'];
+    $okay = $_POST['okay'];
     $passwd = $_POST['password'];
     $hashed = hash("whirlpool", $passwd);
     $_SESSION["error"] = "";
@@ -20,9 +21,9 @@ if(isset($_POST['login']))
         $conn = new PDO("mysql:$dbhost;dbname=$dbname", $dbuser, $dbpass);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $conn->prepare("SELECT * FROM user_info WHERE username = '$username' AND verification = '1' AND passwd = '$hashed'");
+        $stmt = $conn->prepare("SELECT * FROM user_info WHERE username = '$username' AND verification = '1' AND okay = '$okay'AND passwd = '$hashed'");
         session_start();
-        $_SESSION['id'] = $_POST['username'];
+        $_SESSION['id'] = $_POST['okay'];
         $id = $_SESSION['id'];
         $stmt->execute(array(':username' => $id, ':passwd' => $hashed, ':verification' => 1));
 
@@ -32,6 +33,7 @@ if(isset($_POST['login']))
         if ($count == 1) {
             $_SESSION["username"] = $row['username'];
             $_SESSION["email"] = $row['email'];
+            session_start();
             header("Location: ../gallery.php");
             return ;
         }

@@ -15,6 +15,11 @@
             <form action="includes/registration.inc.php" method="POST">
                
                     <h1 class="reg-h1">Registration</h1>
+                    <?php
+            if ($_SESSION['username'] != "") {
+                header("Location: gallery.php");
+            } 
+            ?>
                     <span class="reg-error">
                         <?php
                             if ($_SESSION["error"] != "") {
@@ -35,11 +40,12 @@
                     </span>
                    <span class="reg-label">USERNAME</span><br> <input class="reg-input" type="text" name="username" placeholder="Username..."><br><br>
                    <span class="reg-label">EMAIL </span><br>   <input class="reg-input" type="email" name="email" placeholder="Email..."><br><br>
+                   <span class="reg-label">UNIQUE </span><br>   <input class="reg-input" type="text" name="okay" placeholder="Enter your unique name..."><br><br>
                    <span class="reg-label">PASSWORD</span><br> <input class="reg-input" type="password" name="password" placeholder="Password..."><br><br>
                    <span class="reg-label">CONFIRM PASSWORD</span><br> <input class="reg-input" type="password" name="cpassword" placeholder="Confirm Password...">
                 
                 <input class="reg-button" type="submit" name="register" value="Sign up"><br><br>
-                Already have an account? <a href="login.php" target="_blank">Sign in</a>
+                Already have an account? <a href="login.php">Sign in</a>
             </form>
         </div>
     </body>

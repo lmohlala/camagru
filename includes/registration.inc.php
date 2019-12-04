@@ -9,6 +9,7 @@
                 $password               = $_POST['password'];
                 $hashed                 = hash("whirlpool", $password);
                 $cpassword              = $_POST['cpassword'];
+                $okay              = $_POST['okay'];
                 $verification           = 0;
                 $_SESSION["error"]      = "";
                 $_SESSION["success"]    = "";
@@ -70,9 +71,10 @@
                     }
 
                     /** inserting user into database */
-                    $sql =$conn->prepare("INSERT INTO user_info (username, email, passwd, verification) VALUES (:username, :email, :passwd, :verification)");
+                    $sql =$conn->prepare("INSERT INTO user_info (username, email, okay, passwd, verification) VALUES (:username, :email, :okay, :passwd, :verification)");
                     $sql->bindParam(':username', $username);
                     $sql->bindParam(':email', $email);
+                    $sql->bindParam(':okay', $okay);
                     $sql->bindParam(':passwd', $hashed);
                     $sql->bindParam(':verification', $verification);
                     $sql->execute();
@@ -85,7 +87,7 @@
 			        mail("$email", "Verify Camagru account", "$message", "$headers");
                     $_SESSION["success"] = "You have been registered! Please verify your email!";
                     header("Location:../registration.php");
-                    header("Location:../login.php");
+                    // header("Location:../login.php");
                     return ;
                 }
                 catch (PDOException $e)
